@@ -1,0 +1,26 @@
+{
+  "name": "mem-cli",
+  "version": "1.0.0",
+  "description": "A minimalist CLI for your digital memory with regex search support.",
+  "type": "module",
+  "main": "mem.js",
+  "bin": {
+    "mem": "./mem.js"
+  },
+  "files": [
+    "locales/"
+  ],
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "clipboardy": "^4.0.0",
+    "commander": "^12.1.0",
+    "date-fns": "^4.1.0",
+    "fs-extra": "^11.2.0",
+    "i18next": "^25.8.7",
+    "i18next-fs-backend": "^2.6.1",
+    "inquirer": "^13.2.2",
+    "lowdb": "^7.0.1",
+    "os-locale": "^8.0.0"
+  }
+}

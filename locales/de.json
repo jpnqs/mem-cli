@@ -1,0 +1,69 @@
+{
+  "program": {
+    "name": "mem",
+    "description": "Erinnerungen verwalten. Als Klartext oder verschlüsselt speichern."
+  },
+  "commands": {
+    "add": {
+      "description": "Eintrag erstellen",
+      "argText": "Zu speichernder Text",
+      "optTags": "Tags (kommagetrennt)",
+      "optClipboard": "Aus Zwischenablage lesen",
+      "optEncrypted": "Inhalt verschlüsseln",
+      "success": "\nErfolgreich gespeichert unter ID: {{id}}\n"
+    },
+    "find": {
+      "description": "Nach Inhalt, Tags oder Datum suchen",
+      "argQuery": "Suchbegriff (Regex)",
+      "optTable": "Als Tabelle anzeigen",
+      "optDate": "Nach Datum filtern (YYYY-MM-DD, DD.MM.YYYY, heute, gestern)",
+      "noMatches": "\nKeine Treffer gefunden.",
+      "tableHeaders": {
+        "id": "ID",
+        "date": "Datum",
+        "tags": "Tags",
+        "usage": "Aufrufe",
+        "content": "Inhalt"
+      }
+    },
+    "get": {
+      "description": "Inhalt eines Eintrags abrufen",
+      "argId": "Numerische ID",
+      "optClipboard": "In Zwischenablage kopieren",
+      "header": "\n--- Eintrag {{id}} ({{count}}x verwendet) ---",
+      "copied": "\nKopiert!"
+    },
+    "edit": {
+      "description": "Eintrag bearbeiten",
+      "argId": "ID zum Bearbeiten",
+      "success": "Eintrag aktualisiert!"
+    },
+    "tags": {
+      "description": "Tags und deren Häufigkeit anzeigen",
+      "tableHeaders": {
+        "tag": "Tag",
+        "count": "Anzahl"
+      }
+    },
+    "location": {
+      "description": "Speicherorte der DB- und Vault-Dateien anzeigen"
+    },
+    "delete": {
+      "description": "Eintrag löschen",
+      "success": "Gelöscht."
+    }
+  },
+  "prompts": {
+    "setPassword": "Passwort festlegen:",
+    "enterPassword": "Passwort eingeben:",
+    "editPassword": "Passwort zum Bearbeiten:",
+    "newContent": "Neuer Inhalt:",
+    "newTags": "Neue Tags:",
+    "encryptionPassword": "Verschlüsselungs-Passwort:"
+  },
+  "errors": {
+    "noContent": "Fehler: Kein Inhalt!",
+    "notFound": "Nicht gefunden.",
+    "wrongPassword": "Falsches Passwort!"
+  }
+}

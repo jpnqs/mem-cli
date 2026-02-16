@@ -1,0 +1,69 @@
+{
+  "program": {
+    "name": "mem",
+    "description": "Crea y gestiona tus recuerdos. Guárdalos en texto plano o encriptados."
+  },
+  "commands": {
+    "add": {
+      "description": "Crear una entrada",
+      "argText": "Texto a guardar",
+      "optTags": "Tags (separados por comas)",
+      "optClipboard": "Leer desde el portapapeles",
+      "optEncrypted": "Encriptar contenido",
+      "success": "\n¡Éxito! Guardado con ID: {{id}}\n"
+    },
+    "find": {
+      "description": "Buscar por contenido, tags o fecha",
+      "argQuery": "Término de búsqueda (regex)",
+      "optTable": "Mostrar como tabla",
+      "optDate": "Filtrar por fecha (YYYY-MM-DD, DD.MM.YYYY, hoy, ayer)",
+      "noMatches": "\nNo se encontraron coincidencias.",
+      "tableHeaders": {
+        "id": "ID",
+        "date": "Fecha",
+        "tags": "Tags",
+        "usage": "Usos",
+        "content": "Contenido"
+      }
+    },
+    "get": {
+      "description": "Obtener el contenido de una entrada específica",
+      "argId": "ID numérico",
+      "optClipboard": "Copiar al portapapeles",
+      "header": "\n--- Entrada {{id}} (Usada {{count}} veces) ---",
+      "copied": "\n¡Copiado!"
+    },
+    "edit": {
+      "description": "Editar una entrada existente",
+      "argId": "ID a editar",
+      "success": "¡Entrada actualizada!"
+    },
+    "tags": {
+      "description": "Mostrar tags y su frecuencia de uso",
+      "tableHeaders": {
+        "tag": "Tag",
+        "count": "Cantidad"
+      }
+    },
+    "location": {
+      "description": "Mostrar ubicación de los archivos DB y Vault"
+    },
+    "delete": {
+      "description": "Eliminar una entrada existente",
+      "success": "Eliminado."
+    }
+  },
+  "prompts": {
+    "setPassword": "Establecer contraseña:",
+    "enterPassword": "Introducir contraseña:",
+    "editPassword": "Contraseña para editar:",
+    "newContent": "Nuevo contenido:",
+    "newTags": "Nuevos tags:",
+    "encryptionPassword": "Contraseña de encriptación:"
+  },
+  "errors": {
+    "noContent": "Error: ¡Sin contenido!",
+    "notFound": "No encontrado.",
+    "wrongPassword": "¡Contraseña incorrecta!"
+  }
+}

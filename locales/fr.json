@@ -1,0 +1,69 @@
+{
+  "program": {
+    "name": "mem",
+    "description": "Créez et gérez vos souvenirs. Stockez-les en texte brut ou chiffrés."
+  },
+  "commands": {
+    "add": {
+      "description": "Créer une entrée",
+      "argText": "Texte à stocker",
+      "optTags": "Tags (séparés par des virgules)",
+      "optClipboard": "Lire depuis le presse-papiers",
+      "optEncrypted": "Chiffrer le contenu",
+      "success": "\nSuccès ! Enregistré avec l'ID : {{id}}\n"
+    },
+    "find": {
+      "description": "Rechercher par contenu, tags ou date",
+      "argQuery": "Terme de recherche (regex)",
+      "optTable": "Afficher sous forme de tableau",
+      "optDate": "Filtrer par date (YYYY-MM-DD, DD.MM.YYYY, aujourd'hui, hier)",
+      "noMatches": "\nAucun résultat trouvé.",
+      "tableHeaders": {
+        "id": "ID",
+        "date": "Date",
+        "tags": "Tags",
+        "usage": "Utilisations",
+        "content": "Contenu"
+      }
+    },
+    "get": {
+      "description": "Récupérer le contenu d'une entrée spécifique",
+      "argId": "ID numérique",
+      "optClipboard": "Copier dans le presse-papiers",
+      "header": "\n--- Entrée {{id}} (Utilisée {{count}}x) ---",
+      "copied": "\nCopié !"
+    },
+    "edit": {
+      "description": "Modifier eine entrée existante",
+      "argId": "ID à modifier",
+      "success": "Entrée mise à jour !"
+    },
+    "tags": {
+      "description": "Afficher les tags et leur fréquence d'utilisation",
+      "tableHeaders": {
+        "tag": "Tag",
+        "count": "Nombre"
+      }
+    },
+    "location": {
+      "description": "Afficher l'emplacement des fichiers DB et Vault"
+    },
+    "delete": {
+      "description": "Supprimer une entrée existante",
+      "success": "Supprimé."
+    }
+  },
+  "prompts": {
+    "setPassword": "Définir un mot de passe :",
+    "enterPassword": "Entrer le mot de passe :",
+    "editPassword": "Mot de passe pour modification :",
+    "newContent": "Nouveau contenu :",
+    "newTags": "Nouveaux tags :",
+    "encryptionPassword": "Mot de passe de chiffrement :"
+  },
+  "errors": {
+    "noContent": "Erreur : Aucun contenu !",
+    "notFound": "Non trouvé.",
+    "wrongPassword": "Mot de passe incorrect !"
+  }
+}

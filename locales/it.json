@@ -1,0 +1,69 @@
+{
+  "program": {
+    "name": "mem",
+    "description": "Crea e gestisci i tuoi ricordi. Salvali in testo semplice o criptati."
+  },
+  "commands": {
+    "add": {
+      "description": "Crea una nota",
+      "argText": "Testo da salvare",
+      "optTags": "Tag (separati da virgola)",
+      "optClipboard": "Leggi dagli appunti",
+      "optEncrypted": "Cripta il contenuto",
+      "success": "\nSuccesso! Salvato con ID: {{id}}\n"
+    },
+    "find": {
+      "description": "Cerca note per contenuto, tag o data",
+      "argQuery": "Termine di ricerca (regex)",
+      "optTable": "Mostra come tabella",
+      "optDate": "Filtra per data (YYYY-MM-DD, DD.MM.YYYY, oggi, ieri)",
+      "noMatches": "\nNessun risultato trovato.",
+      "tableHeaders": {
+        "id": "ID",
+        "date": "Data",
+        "tags": "Tag",
+        "usage": "Usi",
+        "content": "Contenuto"
+      }
+    },
+    "get": {
+      "description": "Recupera il contenuto di una nota specifica",
+      "argId": "ID numerico",
+      "optClipboard": "Copia negli appunti",
+      "header": "\n--- Nota {{id}} (Usata {{count}} volte) ---",
+      "copied": "\nCopiato!"
+    },
+    "edit": {
+      "description": "Modifica una nota esistente",
+      "argId": "ID da modificare",
+      "success": "Nota aggiornata!"
+    },
+    "tags": {
+      "description": "Mostra i tag e la loro frequenza d'uso",
+      "tableHeaders": {
+        "tag": "Tag",
+        "count": "Conteggio"
+      }
+    },
+    "location": {
+      "description": "Mostra la posizione dei file DB e Vault"
+    },
+    "delete": {
+      "description": "Elimina una nota esistente",
+      "success": "Eliminata."
+    }
+  },
+  "prompts": {
+    "setPassword": "Imposta password:",
+    "enterPassword": "Inserisci password:",
+    "editPassword": "Password per la modifica:",
+    "newContent": "Nuovo contenuto:",
+    "newTags": "Nuovi tag:",
+    "encryptionPassword": "Password di criptazione:"
+  },
+  "errors": {
+    "noContent": "Errore: Nessun contenuto!",
+    "notFound": "Non trovato.",
+    "wrongPassword": "Password errata!"
+  }
+}

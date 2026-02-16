@@ -1,0 +1,69 @@
+{
+  "program": {
+    "name": "mem",
+    "description": "Create and manage your memories. Store them as plaintext or encrypted."
+  },
+  "commands": {
+    "add": {
+      "description": "Create a memory",
+      "argText": "The text to store",
+      "optTags": "Comma separated tags",
+      "optClipboard": "Read text from clipboard",
+      "optEncrypted": "Encrypt the content",
+      "success": "\nSuccess! Stored with ID: {{id}}\n"
+    },
+    "find": {
+      "description": "Find memories by its content, tags or creation date",
+      "argQuery": "Search term (regex)",
+      "optTable": "Display in table",
+      "optDate": "Filter by date (YYYY-MM-DD, DD.MM.YYYY, today, yesterday)",
+      "noMatches": "\nNo matches found.",
+      "tableHeaders": {
+        "id": "ID",
+        "date": "Date",
+        "tags": "Tags",
+        "usage": "Use",
+        "content": "Content"
+      }
+    },
+    "get": {
+      "description": "Get the content of a specific memory",
+      "argId": "Numeric ID",
+      "optClipboard": "Copy to clipboard",
+      "header": "\n--- Entry {{id}} (Used {{count}}x) ---",
+      "copied": "\nCopied!"
+    },
+    "edit": {
+      "description": "Edit an existing memory",
+      "argId": "ID to edit",
+      "success": "Entry updated!"
+    },
+    "tags": {
+      "description": "Display the tags and their usage",
+      "tableHeaders": {
+        "tag": "Tag",
+        "count": "Count"
+      }
+    },
+    "location": {
+      "description": "Display the location of the currently used db and vault file"
+    },
+    "delete": {
+      "description": "Delete an existing memory",
+      "success": "Deleted."
+    }
+  },
+  "prompts": {
+    "setPassword": "Set password:",
+    "enterPassword": "Enter password:",
+    "editPassword": "Enter password to edit:",
+    "newContent": "New content:",
+    "newTags": "New tags:",
+    "encryptionPassword": "Password for encryption:"
+  },
+  "errors": {
+    "noContent": "Error: No content!",
+    "notFound": "Not found.",
+    "wrongPassword": "Wrong password!"
+  }
+}
