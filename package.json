@@ -17,10 +17,7 @@
     "commander": "^12.1.0",
     "date-fns": "^4.1.0",
     "fs-extra": "^11.2.0",
-    "i18next": "^25.8.7",
-    "i18next-fs-backend": "^2.6.1",
     "inquirer": "^13.2.2",
-    "lowdb": "^7.0.1",
-    "os-locale": "^8.0.0"
+    "lowdb": "^7.0.1"
   }
 }

@@ -11,32 +11,10 @@ import Table from "cli-table3";
 import inquirer from "inquirer";
 import crypto from "crypto";
 import { parse, isSameDay, subDays, startOfDay } from "date-fns";
-import i18next from "i18next";
-import Backend from "i18next-fs-backend";
-import osLocale from "os-locale";
+import { translate, detectSystemLanguage } from "./src/translate.js";
 
-// --- i18n INITIALISIERUNG ---
-const systemLocale = osLocale();
-
-console.log(systemLocale);
-
-await i18next.use(Backend).init({
-  lng: systemLocale.split("-")[0],
-  fallbackLng: "en",
-  debug: false,
-  preload: ["en", "de"],
-  backend: {
-    loadPath: path.join(process.cwd(), "locales/{{lng}}.json"),
-  },
-  silent: true, // Falls vom Backend unterstützt
-  logger: {
-    log: () => {},
-    warn: () => {},
-    error: (msg) => console.error(msg), // Fehler wollen wir trotzdem sehen
-  },
-});
-
-const t = i18next.t;
+const systemLocale = detectSystemLanguage();
+const t = translate("./locales", detectSystemLanguage());
 
 // --- CONFIGURATION ---
 const defaultDir = path.join(os.homedir(), ".memory-cli-data");
@@ -52,8 +30,8 @@ const vault = await JSONFilePreset(vaultPath, { secrets: {} });
 const program = new Command();
 
 program
-  .name(t("program.name"))
-  .description(t("program.description"))
+  .name(t.get("program.name"))
+  .description(t.get("program.description"))
   .version("1.0.0");
 
 // --- HELPERS ---
@@ -112,12 +90,12 @@ const getNextId = () => {
 
 program
   .command("add")
-  .description(t("commands.add.description"))
+  .description(t.get("commands.add.description"))
   .alias("a")
-  .argument("[text]", t("commands.add.argText"))
-  .option("-t, --tags <tags>", t("commands.add.optTags"), "")
-  .option("-c, --clipboard", t("commands.add.optClipboard"))
-  .option("-e, --encrypted", t("commands.add.optEncrypted"))
+  .argument("[text]", t.get("commands.add.argText"))
+  .option("-t, --tags <tags>", t.get("commands.add.optTags"), "")
+  .option("-c, --clipboard", t.get("commands.add.optClipboard"))
+  .option("-e, --encrypted", t.get("commands.add.optEncrypted"))
   .action(async (text, options) => {
     let content = text;
     if (options.clipboard) content = await clipboardy.read();
@@ -133,7 +111,7 @@ program
         {
           type: "password",
           name: "password",
-          message: t("prompts.setPassword"),
+          message: t.get("prompts.setPassword"),
           mask: "*",
         },
       ]);
@@ -152,17 +130,17 @@ program
       usageCount: 0,
     });
     await db.write();
-    console.log(chalk.green(t("commands.add.success", { id })));
+    console.log(chalk.green(t.get("commands.add.success", { id })));
   });
 
 program
   .command("find")
-  .description(t("commands.find.description"))
+  .description(t.get("commands.find.description"))
   .alias("search")
   .alias("f")
-  .argument("[query]", t("commands.find.argQuery"), "*")
-  .option("-t, --table", t("commands.find.optTable"))
-  .option("-d, --date <date>", t("commands.find.optDate"))
+  .argument("[query]", t.get("commands.find.argQuery"), "*")
+  .option("-t, --table", t.get("commands.find.optTable"))
+  .option("-d, --date <date>", t.get("commands.find.optDate"))
   .action((query, options) => {
     let filterDate = options.date ? parseSearchDate(options.date) : null;
     const regex = new RegExp(query.replace(/\*/g, ".*"), "i");
@@ -183,11 +161,11 @@ program
     if (options.table) {
       const table = new Table({
         head: [
-          chalk.cyan(t("commands.find.tableHeaders.id")),
-          chalk.magenta(t("commands.find.tableHeaders.date")),
-          chalk.magenta(t("commands.find.tableHeaders.tags")),
-          chalk.white(t("commands.find.tableHeaders.usage")),
-          chalk.white(t("commands.find.tableHeaders.content")),
+          chalk.cyan(t.get("commands.find.tableHeaders.id")),
+          chalk.magenta(t.get("commands.find.tableHeaders.date")),
+          chalk.magenta(t.get("commands.find.tableHeaders.tags")),
+          chalk.white(t.get("commands.find.tableHeaders.usage")),
+          chalk.white(t.get("commands.find.tableHeaders.content")),
         ],
         wordWrap: true,
       });
@@ -218,13 +196,13 @@ program
 
 program
   .command("get")
-  .description(t("commands.get.description"))
+  .description(t.get("commands.get.description"))
   .alias("g")
-  .argument("<id>", t("commands.get.argId"))
-  .option("-c, --clipboard", t("commands.get.optClipboard"))
+  .argument("<id>", t.get("commands.get.argId"))
+  .option("-c, --clipboard", t.get("commands.get.optClipboard"))
   .action(async (id, options) => {
     const entry = db.data.entries.find((e) => e.id === parseInt(id));
-    if (!entry) return console.error(chalk.red(t("errors.notFound")));
+    if (!entry) return console.error(chalk.red(t.get("errors.notFound")));
 
     let displayContent = entry.content;
     if (entry.encrypted) {
@@ -238,7 +216,7 @@ program
       ]);
       const decrypted = decrypt(vault.data.secrets[id], password);
       if (!decrypted)
-        return console.error(chalk.red(t("errors.wrongPassword")));
+        return console.error(chalk.red(t.get("errors.wrongPassword")));
       displayContent = decrypted;
     }
 
@@ -246,21 +224,21 @@ program
     await db.write();
 
     console.log(
-      chalk.cyan(t("commands.get.header", { id, count: entry.usageCount })),
+      chalk.cyan(t.get("commands.get.header", { id, count: entry.usageCount })),
     );
     console.log(chalk.white(displayContent));
 
     if (options.clipboard) {
       await clipboardy.write(displayContent);
-      console.log(chalk.green(t("commands.get.copied")));
+      console.log(chalk.green(t.get("commands.get.copied")));
     }
   });
 
 program
   .command("edit")
-  .description(t("commands.edit.description"))
+  .description(t.get("commands.edit.description"))
   .alias("e")
-  .argument("<id>", t("commands.edit.argId"))
+  .argument("<id>", t.get("commands.edit.argId"))
   .action(async (id) => {
     const entryIndex = db.data.entries.findIndex((e) => e.id === parseInt(id));
     if (entryIndex === -1)
@@ -273,13 +251,13 @@ program
         {
           type: "password",
           name: "password",
-          message: t("prompts.editPassword"),
+          message: t.get("prompts.editPassword"),
           mask: "*",
         },
       ]);
       currentContent = decrypt(vault.data.secrets[id], password);
       if (!currentContent)
-        return console.error(chalk.red(t("errors.wrongPassword")));
+        return console.error(chalk.red(t.get("errors.wrongPassword")));
     }
 
     const answers = await inquirer.prompt([
@@ -313,12 +291,12 @@ program
     }
     entry.tags = answers.tags.split(",").map((t) => t.trim());
     await db.write();
-    console.log(chalk.green(t("commands.edit.success")));
+    console.log(chalk.green(t.get("commands.edit.success")));
   });
 
 program
   .command("tags")
-  .description(t("commands.tags.description"))
+  .description(t.get("commands.tags.description"))
   .action(() => {
     const tagMap = {};
     db.data.entries.forEach((e) =>
@@ -326,8 +304,8 @@ program
     );
     const table = new Table({
       head: [
-        chalk.magenta(t("commands.tags.tableHeaders.tag")),
-        chalk.cyan(t("commands.tags.tableHeaders.count")),
+        chalk.magenta(t.get("commands.tags.tableHeaders.tag")),
+        chalk.cyan(t.get("commands.tags.tableHeaders.count")),
       ],
     });
     Object.entries(tagMap)
@@ -338,13 +316,13 @@ program
 
 program
   .command("location")
-  .description(t("commands.location.description"))
+  .description(t.get("commands.location.description"))
   .alias("loc")
   .action(() => console.log(chalk.cyan(`DB: ${dbPath}\nVault: ${vaultPath}`)));
 
 program
   .command("delete")
-  .description(t("commands.delete.description"))
+  .description(t.get("commands.delete.description"))
   .alias("rm")
   .argument("<id>")
   .action(async (id) => {
@@ -352,7 +330,7 @@ program
     delete vault.data.secrets[id];
     await db.write();
     await vault.write();
-    console.log(chalk.green(t("commands.delete.success")));
+    console.log(chalk.green(t.get("commands.delete.success")));
   });
 
 program.parse();
